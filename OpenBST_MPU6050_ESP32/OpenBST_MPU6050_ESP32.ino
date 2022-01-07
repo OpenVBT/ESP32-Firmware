@@ -41,6 +41,8 @@ bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint8_t txValue = 0;
 
+uint8_t macAddress[] = {0x5C, 0x60, 0xD3, 0x6C, 0x82, 0x1C - 0x02}; // Subtract two because actual address is +2 for some reason?
+
 #endif // BLUETOOTH_EN
 
 MPU6050 mpu;
@@ -113,6 +115,8 @@ void dmpDataReady() {
 
 #ifdef BLUETOOTH_EN
   void setupBLE() {
+    esp_base_mac_addr_set(macAddress);
+    
     BLEDevice::init("OpenBST UART Service");
 
     pServer = BLEDevice::createServer();
